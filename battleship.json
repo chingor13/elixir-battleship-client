@@ -47,14 +47,23 @@
           "game"
         ],
         "summary": "Submits a turn",
-        "operationId": "fire",
+        "operationId": "turn",
         "consumes": [
           "application/json"
         ],
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Turn"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",

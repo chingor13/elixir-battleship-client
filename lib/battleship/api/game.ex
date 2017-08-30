@@ -12,34 +12,6 @@ defmodule Battleship.Api.Game do
 
 
   @doc """
-  Submits a turn
-
-  ## Parameters
-
-  - connection (Battleship.Connection): Connection to server
-  - opts (KeywordList): [optional] Optional parameters
-
-  ## Returns
-
-  {:ok, %Battleship.Model.Turn{}} on success
-  {:error, info} on failure
-  """
-  @spec fire(Tesla.Env.client, keyword()) :: {:ok, Battleship.Model.Turn.t} | {:error, Tesla.Env.t}
-  def fire(connection, opts \\ []) do
-    optional_params = %{
-      
-    }
-
-    %{}
-    |> method(:post)
-    |> url("/turn")
-    |> add_optional_params(optional_params, opts)
-    |> Enum.into([])
-    |> (&Connection.request(connection, &1)).()
-    |> decode(%Battleship.Model.Turn{})
-  end
-
-  @doc """
   Initializes a game and returns a game id that you must pass to subsequent calls
 
   ## Parameters
@@ -65,5 +37,35 @@ defmodule Battleship.Api.Game do
     |> Enum.into([])
     |> (&Connection.request(connection, &1)).()
     |> decode(%Battleship.Model.NewGameResponse{})
+  end
+
+  @doc """
+  Submits a turn
+
+  ## Parameters
+
+  - connection (Battleship.Connection): Connection to server
+  - body (Turn): 
+  - opts (KeywordList): [optional] Optional parameters
+
+  ## Returns
+
+  {:ok, %Battleship.Model.Turn{}} on success
+  {:error, info} on failure
+  """
+  @spec turn(Tesla.Env.client, Battleship.Model.Turn.t, keyword()) :: {:ok, Battleship.Model.Turn.t} | {:error, Tesla.Env.t}
+  def turn(connection, body, opts \\ []) do
+    optional_params = %{
+      
+    }
+
+    %{}
+    |> method(:post)
+    |> url("/turn")
+    |> add_param(:body, :"body", body)
+    |> add_optional_params(optional_params, opts)
+    |> Enum.into([])
+    |> (&Connection.request(connection, &1)).()
+    |> decode(%Battleship.Model.Turn{})
   end
 end
