@@ -1,0 +1,122 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a server for a client <-> server game of [BattleShip](https://en.wikipedia.org/wiki/Battleship_(game)).",
+    "version": "1.0.0",
+    "title": "Battleship API"
+  },
+  "host": "battleship-176302.appspot.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "game",
+      "description": "Everything about a game"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/new_game": {
+      "get" :{
+        "tags": [
+          "game"
+        ],
+        "summary": "Initializes a game and returns a game id that you must pass to subsequent calls",
+        "operationId": "newGame",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/NewGameResponse"
+            }
+          }
+        }
+      }
+    },
+    "/turn": {
+      "post": {
+        "tags": [
+          "game"
+        ],
+        "summary": "Submits a turn",
+        "operationId": "fire",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/Turn"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "NewGameResponse": {
+      "type": "object",
+      "properties": {
+        "game_id": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "Turn": {
+      "type": "object",
+      "properties": {
+        "game_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "response": {
+          "$ref": "#/definitions/Response"
+        },
+        "guess": {
+          "$ref": "#/definitions/Guess"
+        }
+      }
+    },
+    "Response": {
+      "type": "object",
+      "properties": {
+        "hit": {
+          "type": "boolean"
+        },
+        "sunk": {
+          "type": "string"
+        },
+        "turn_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "Guess": {
+      "type": "object",
+      "properties": {
+        "guess": {
+          "type": "string"
+        },
+        "turn_id": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}
